@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, jsonify
 import random
 
 app = Flask(__name__)
@@ -9,7 +9,7 @@ fortunes = [
     "The future belongs to those who can code and think.",
     "Technology changes the world, one line of code at a time.",
     "The best way to predict the future is to invent it.",
-    "Code is like sex: it's often messy, but the results are worth it.",
+    "Code is poetry written in logic.",
     "The only limit to your creativity is your imagination.",
     "Technology is the tool that makes the dream possible.",
     "In the end, it's not the code that matters, but the problem it solves.",
@@ -17,13 +17,13 @@ fortunes = [
 ]
 
 @app.route("/")
-def chat():
-    fortunal = "Click button to get fortune"
-    return render_template("./index.html", fortune=fortunal)
+def index():
+    fortune = "✨ Spin the wheel to reveal your fortune! ✨"
+    return render_template("index.html", fortune=fortune)
 
 @app.route("/fortune", methods=["GET"])
 def get_fortune():
-    fortune = fortunes[random.randint(0, 9)]
+    fortune = fortunes[random.randint(0, len(fortunes) - 1)]
     return jsonify(fortune=fortune)
 
 if __name__ == "__main__":

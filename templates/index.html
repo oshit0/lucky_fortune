@@ -1,23 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Lucky Fortune Lab</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vegas Fortune Wheel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
-    <h1>Lucky Fortune Lab</h1>
-    <div id="result">{{fortune}}</div>
-    <div class="pointer"></div>
-    <div class="wheel" id="wheel">
-        <div class="slice s1"></div>
-        <div class="slice s2"></div>
-        <div class="slice s3"></div>
-        <div class="slice s4"></div>
-        <div class="slice s5"></div>
-        <div class="slice s6"></div>
+    <div class="container">
+        <h1 class="title">VEGAS FORTUNE</h1>
+        
+        <div class="wheel-container">
+            <div class="pointer"></div>
+            <div id="wheel" class="wheel">
+                <div class="slice s1"></div>
+                <div class="slice s2"></div>
+                <div class="slice s3"></div>
+                <div class="slice s4"></div>
+                <div class="slice s5"></div>
+                <div class="slice s6"></div>
+                <div class="wheel-center"></div>
+            </div>
+        </div>
+
+        <div id="fortune-box" class="fortune-box">
+            <p id="fortune-text">{{ fortune }}</p>
+        </div>
+
+        <button id="fortune-button" class="fortune-button">SPIN THE WHEEL</button>
+
+        <p class="footer">🎰 May luck be on your side! 🎰</p>
     </div>
-        <button id="spinBtn">Find My Fortune</button>
-    <script src="{{url_for('static', filename='js/script.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

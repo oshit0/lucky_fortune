@@ -1,63 +1,533 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: #f5f5f5;
-    margin: 0;
-    padding-top: 40px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-h1 {
-    margin-bottom: 10px;
+body {
+  font-family: "Oswald", sans-serif;
+  background: radial-gradient(ellipse at center, #1a0a0a 0%, #000000 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: background 1s ease-out;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 40px,
+      rgba(255, 215, 0, 0.03) 40px,
+      rgba(255, 215, 0, 0.03) 80px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 40px,
+      rgba(255, 0, 0, 0.02) 40px,
+      rgba(255, 0, 0, 0.02) 80px
+    );
+  pointer-events: none;
+  transition: all 1s ease-out;
+}
+
+body.fortune-revealed {
+  background: radial-gradient(
+    circle at center,
+    #1a0a00 0%,
+    #2d1500 20%,
+    #1a0000 50%,
+    #0a0000 100%
+  );
+  animation: jackpotFlash 0.4s linear 5 alternate, 
+             fortuneBackgroundPulse 3s ease-in-out infinite 2s;
+}
+
+body.fortune-revealed::before {
+  background-image: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 15px,
+      rgba(255, 215, 0, 0.25) 15px,
+      rgba(255, 215, 0, 0.25) 30px,
+      transparent 30px,
+      transparent 45px,
+      rgba(255, 0, 0, 0.2) 45px,
+      rgba(255, 0, 0, 0.2) 60px
+    );
+  animation: marqueeLights 4s linear infinite, lightPulse 2s ease-in-out infinite;
+}
+
+@keyframes jackpotFlash {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.4) saturate(1.3); }
+}
+
+@keyframes fortuneBackgroundPulse {
+  0%, 100% { 
+    background: radial-gradient(circle at center, #1a0a00 0%, #2d1500 20%, #1a0000 50%, #0a0000 100%);
+  }
+  50% { 
+    background: radial-gradient(circle at center, #2d1500 0%, #3d2000 20%, #2d0000 50%, #0d0000 100%);
+  }
+}
+
+@keyframes marqueeLights {
+  0% { transform: translateX(0) translateY(0); }
+  100% { transform: translateX(60px) translateY(60px); }
+}
+
+@keyframes lightPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.container {
+  background: linear-gradient(145deg, #1a0000 0%, #0d0000 100%);
+  border: 3px solid #b8860b;
+  border-radius: 20px;
+  padding: 50px 40px;
+  max-width: 650px;
+  width: 100%;
+  box-shadow: 0 0 60px rgba(255, 215, 0, 0.3), 0 0 100px rgba(255, 0, 0, 0.2),
+    inset 0 2px 0 rgba(255, 215, 0, 0.3), inset 0 -2px 0 rgba(0, 0, 0, 0.8);
+  text-align: center;
+  position: relative;
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.3), 0 0 100px rgba(255, 0, 0, 0.2),
+      inset 0 2px 0 rgba(255, 215, 0, 0.3), inset 0 -2px 0 rgba(0, 0, 0, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 80px rgba(255, 215, 0, 0.5), 0 0 120px rgba(255, 0, 0, 0.3),
+      inset 0 2px 0 rgba(255, 215, 0, 0.5), inset 0 -2px 0 rgba(0, 0, 0, 0.8);
+  }
+}
+
+.fortune-revealed .container {
+  background: linear-gradient(145deg, #2d0000 0%, #1a0000 50%, #0d0000 100%);
+  border-color: #ffd700;
+  box-shadow: 
+    0 0 80px rgba(255, 215, 0, 0.8),
+    0 0 120px rgba(255, 215, 0, 0.5),
+    0 0 160px rgba(255, 0, 0, 0.4),
+    inset 0 0 60px rgba(255, 215, 0, 0.2);
+  animation: jackpotGlow 2s ease-in-out infinite, 
+             containerPopIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.3s;
+}
+
+@keyframes jackpotGlow {
+  0%, 100% {
+    box-shadow: 
+      0 0 80px rgba(255, 215, 0, 0.8),
+      0 0 120px rgba(255, 215, 0, 0.5),
+      0 0 160px rgba(255, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 
+      0 0 100px rgba(255, 215, 0, 1),
+      0 0 150px rgba(255, 215, 0, 0.7),
+      0 0 200px rgba(255, 0, 0, 0.6);
+  }
+}
+
+@keyframes containerPopIn {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.container::before,
+.container::after {
+  content: "★";
+  position: absolute;
+  font-size: 2rem;
+  color: #ffd700;
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+.container::before {
+  top: 20px;
+  left: 20px;
+}
+
+.container::after {
+  top: 20px;
+  right: 20px;
+  animation-delay: 1s;
+}
+
+.fortune-revealed .container::before,
+.fortune-revealed .container::after {
+  color: #ffed4e;
+  font-size: 2.5rem;
+  animation: starBurst 0.8s ease-out, twinkleIntense 1.5s ease-in-out infinite 0.8s;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+  }
+  50% {
+    opacity: 0.5;
+    text-shadow: 0 0 5px #ffd700;
+  }
+}
+
+@keyframes starBurst {
+  0% { 
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(1.8) rotate(180deg);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+@keyframes twinkleIntense {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 20px #ffed4e, 0 0 40px #ffd700, 0 0 60px #ffd700;
+  }
+  50% {
+    opacity: 0.6;
+    text-shadow: 0 0 10px #ffed4e, 0 0 20px #ffd700;
+  }
+}
+
+.title {
+  font-family: "Bebas Neue", cursive;
+  background: linear-gradient(180deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 3.5rem;
+  margin-bottom: 40px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+  animation: neonPulse 2s ease-in-out infinite;
+  line-height: 1.1;
+}
+
+@keyframes neonPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px #ffd700)
+      drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px #ffd700)
+      drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+  }
+}
+
+.fortune-revealed .title {
+  animation: neonPulse 1s ease-in-out infinite, titleVictory 0.6s ease-out;
+}
+
+@keyframes titleVictory {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.wheel-container {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  margin: 30px auto;
+}
+
+.pointer {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 35px solid #ffd700;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  filter: drop-shadow(0 0 10px #ffd700);
 }
 
 .wheel {
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    border: 10px solid #333;
-    margin: 20px auto;
-    position: relative;
-    overflow: hidden;
-    transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  border: 8px solid #b8860b;
+  position: relative;
+  overflow: hidden;
+  transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.4), 
+              inset 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.wheel-center {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(145deg, #ffd700, #b8860b);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  border: 3px solid #8b0000;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
 }
 
 .slice {
-    position: absolute;
-    width: 50%;
-    height: 50%;
-    top: 50%;
-    left: 50%;
-    transform-origin: 0% 0%;
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0% 0%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.s1 { background: #ff6b6b; transform: rotate(0deg) skewY(-60deg); }
-.s2 { background: #feca57; transform: rotate(60deg) skewY(-60deg); }
-.s3 { background: #1dd1a1; transform: rotate(120deg) skewY(-60deg); }
-.s4 { background: #54a0ff; transform: rotate(180deg) skewY(-60deg); }
-.s5 { background: #5f27cd; transform: rotate(240deg) skewY(-60deg); }
-.s6 { background: #ee5253; transform: rotate(300deg) skewY(-60deg); }
+.s1 { background: #8b0000; transform: rotate(0deg) skewY(-60deg); }
+.s2 { background: #b8860b; transform: rotate(60deg) skewY(-60deg); }
+.s3 { background: #660000; transform: rotate(120deg) skewY(-60deg); }
+.s4 { background: #ffd700; transform: rotate(180deg) skewY(-60deg); }
+.s5 { background: #8b0000; transform: rotate(240deg) skewY(-60deg); }
+.s6 { background: #b8860b; transform: rotate(300deg) skewY(-60deg); }
 
-.pointer {
-    width: 0; 
-    height: 0; 
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-bottom: 30px solid #333;
-    margin: 0 auto;
+.fortune-box {
+  background: linear-gradient(145deg, #000000 0%, #1a0000 100%);
+  border: 2px solid #8b0000;
+  border-radius: 15px;
+  padding: 40px 30px;
+  margin: 30px 0;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 0 30px rgba(139, 0, 0, 0.4), inset 0 0 40px rgba(255, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
-button {
-    padding: 12px 25px;
-    font-size: 18px;
-    background: #333;
-    color: white;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
+.fortune-revealed .fortune-box {
+  background: linear-gradient(145deg, #1a0000 0%, #2d0000 50%, #1a0000 100%);
+  border: 3px solid #ffd700;
+  box-shadow: 
+    0 0 50px rgba(255, 215, 0, 0.6),
+    0 0 80px rgba(255, 0, 0, 0.4),
+    inset 0 0 50px rgba(255, 215, 0, 0.15);
+  animation: winningBoxPulse 2s ease-in-out infinite;
 }
 
-#result {
-    margin-top: 20px;
-    font-size: 22px;
-    font-weight: bold;
+@keyframes winningBoxPulse {
+  0%, 100% {
+    transform: scale(1);
+    border-color: #ffd700;
+  }
+  50% {
+    transform: scale(1.02);
+    border-color: #ffed4e;
+  }
+}
+
+#fortune-text {
+  color: #ffd700;
+  font-size: 1.35rem;
+  line-height: 1.7;
+  font-weight: 400;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.8);
+  position: relative;
+  z-index: 1;
+  letter-spacing: 0.5px;
+  transition: all 0.5s ease-out;
+}
+
+.fortune-revealed #fortune-text {
+  font-weight: 700;
+  color: #ffed4e;
+  font-size: 1.5rem;
+  text-shadow: 
+    0 0 10px #ffed4e,
+    0 0 20px #ffed4e,
+    0 0 30px #ffd700,
+    0 0 40px #ffd700,
+    0 2px 6px rgba(0, 0, 0, 1);
+  animation: textShimmer 2s ease-in-out infinite;
+}
+
+@keyframes textShimmer {
+  0%, 100% {
+    text-shadow: 
+      0 0 10px #ffed4e,
+      0 0 20px #ffed4e,
+      0 0 30px #ffd700,
+      0 2px 6px rgba(0, 0, 0, 1);
+  }
+  50% {
+    text-shadow: 
+      0 0 15px #ffed4e,
+      0 0 30px #ffed4e,
+      0 0 45px #ffd700,
+      0 0 60px #ffd700,
+      0 2px 6px rgba(0, 0, 0, 1);
+  }
+}
+
+.fortune-button {
+  background: linear-gradient(145deg, #8b0000 0%, #660000 100%);
+  color: #ffd700;
+  border: 3px solid #b8860b;
+  padding: 20px 50px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 0 #330000, 0 8px 20px rgba(0, 0, 0, 0.6),
+    inset 0 2px 0 rgba(255, 215, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-family: "Bebas Neue", cursive;
+  position: relative;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 1);
+}
+
+.fortune-button::before {
+  content: "⬥";
+  position: absolute;
+  left: 20px;
+  animation: twinkle 1.5s ease-in-out infinite;
+}
+
+.fortune-button::after {
+  content: "⬥";
+  position: absolute;
+  right: 20px;
+  animation: twinkle 1.5s ease-in-out infinite 0.75s;
+}
+
+.fortune-button:hover {
+  background: linear-gradient(145deg, #a50000 0%, #8b0000 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 #330000, 0 12px 30px rgba(255, 215, 0, 0.4),
+    inset 0 2px 0 rgba(255, 215, 0, 0.3);
+  border-color: #ffd700;
+}
+
+.fortune-button:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #330000, 0 4px 10px rgba(0, 0, 0, 0.6),
+    inset 0 2px 0 rgba(255, 215, 0, 0.2);
+}
+
+.fortune-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.fortune-revealed .fortune-button {
+  background: linear-gradient(145deg, #b8860b 0%, #8b6914 100%);
+  border-color: #ffd700;
+  animation: buttonCelebrate 2s ease-in-out infinite;
+}
+
+@keyframes buttonCelebrate {
+  0%, 100% {
+    box-shadow: 0 5px 0 #5a4a0a, 0 8px 20px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 5px 0 #5a4a0a, 0 8px 30px rgba(255, 215, 0, 0.6);
+  }
+}
+
+.footer {
+  margin-top: 40px;
+  color: #b8860b;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.fade-in {
+  animation: slotReveal 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes slotReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotateX(90deg);
+  }
+  50% {
+    transform: scale(1.05) rotateX(-10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateX(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 40px 30px;
+    border-width: 2px;
+  }
+
+  .title {
+    font-size: 2.5rem;
+    letter-spacing: 3px;
+  }
+
+  .wheel-container {
+    width: 240px;
+    height: 240px;
+  }
+
+  .wheel {
+    width: 240px;
+    height: 240px;
+  }
+
+  .fortune-box {
+    padding: 35px 25px;
+    min-height: 120px;
+  }
+
+  #fortune-text {
+    font-size: 1.15rem;
+  }
+
+  .fortune-button {
+    padding: 16px 40px;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+  }
+
+  .fortune-button::before,
+  .fortune-button::after {
+    display: none;
+  }
 }
