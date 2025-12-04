@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lucky Fortune Lab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <h1>Lucky Fortune Lab</h1>
+    <div id="result">{{fortune}}</div>
+    <div class="pointer"></div>
+    <div class="wheel" id="wheel">
+        <div class="slice s1"></div>
+        <div class="slice s2"></div>
+        <div class="slice s3"></div>
+        <div class="slice s4"></div>
+        <div class="slice s5"></div>
+        <div class="slice s6"></div>
+    </div>
+        <button id="spinBtn">Find My Fortune</button>
+    <script src="{{url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
